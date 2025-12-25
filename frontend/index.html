@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Marks Prediction</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: linear-gradient(to right, #74ebd5, #acb6e5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .card {
+      background: white;
+      padding: 30px;
+      width: 350px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    }
+    input, button {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+    }
+    button {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <h2>Student Marks Prediction</h2>
+  <input type="number" id="hours" placeholder="Enter Study Hours">
+  <button onclick="predict()">Predict</button>
+  <h3 id="result"></h3>
+</div>
+
+<script>
+function predict() {
+  fetch("http://127.0.0.1:5000/predict", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({ hours: document.getElementById("hours").value })
+  })
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("result").innerText =
+      "Predicted Marks: " + data.predicted_marks;
+  });
+}
+</script>
+
+</body>
+</html>
